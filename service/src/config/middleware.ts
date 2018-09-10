@@ -1,4 +1,5 @@
-const path = require('path');
+import * as path from 'path';
+import { think } from 'thinkjs';
 const isDev = think.env === 'development';
 
 module.exports = [
