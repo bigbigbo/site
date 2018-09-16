@@ -1,0 +1,3 @@
+interface think {
+  Mongo: any;
+}

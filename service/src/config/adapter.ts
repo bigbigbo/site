@@ -1,8 +1,10 @@
+import { think } from 'thinkjs';
 const fileCache = require('think-cache-file');
 const fileSession = require('think-session-file');
 const mysql = require('think-model-mysql');
 const path = require('path');
-import { think } from 'thinkjs';
+// const { DateFile } = require('think-logger3');
+
 const isDev = think.env === 'development';
 
 /**
@@ -80,3 +82,15 @@ exports.session = {
     sessionPath: path.join(think.ROOT_PATH, 'runtime/session')
   }
 };
+
+// exports.logger = {
+//   type: 'dateFile',
+//   dateFile: {
+//     handle: DateFile,
+//     level: 'ALL',
+//     absolute: true,
+//     pattern: '-yyyy-MM-dd',
+//     alwaysIncludePattern: false,
+//     filename: path.join(think.ROOT_PATH, 'logs/xx.log')
+//   }
+// };
