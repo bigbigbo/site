@@ -6,7 +6,7 @@
     "target": "es6",
     "allowJs": true,
     "jsx": "preserve",
-    "lib": ["es6", "esnext", "dom"],
+    "lib": ["dom", "es6", "es7", "es2017", "esnext"],
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "removeComments": true,

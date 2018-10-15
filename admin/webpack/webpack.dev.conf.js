@@ -1,9 +1,11 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+// const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+// const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const baseWebpackConfig = require('./webpack.base.conf');
 const paths = require('./paths');
-const variables = require('../src/global/theme.js');
+const variables = require('../src/config/theme.js');
 
 module.exports = merge(baseWebpackConfig, {
   mode: 'development',
@@ -48,6 +50,22 @@ module.exports = merge(baseWebpackConfig, {
         ]
       },
       {
+        test: /\.css$/,
+        include: [paths.appNodeModules],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          },
+          {
+            loader: 'postcss-loader'
+          }
+        ]
+      },
+      {
         test: /\.less$/,
         include: [paths.appSrc],
         use: [
@@ -74,9 +92,27 @@ module.exports = merge(baseWebpackConfig, {
         ]
       },
       {
+        test: /\.less$/,
+        include: [paths.appNodeModules],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          },
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'less-loader'
+          }
+        ]
+      },
+      {
         test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
-          // 'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
           {
             loader: 'file-loader',
             options: {
@@ -108,7 +144,6 @@ module.exports = merge(baseWebpackConfig, {
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        // use: 'url-loader?limit=10000&mimetype=application/font-woff',
         use: [
           {
             loader: 'url-loader',

@@ -15,6 +15,11 @@
     "@babel/proposal-optional-chaining",
     "@babel/proposal-throw-expressions",
     "@babel/syntax-dynamic-import",
-    "@babel/syntax-import-meta"
+    "@babel/syntax-import-meta",
+    ["import", {
+      "libraryName": "antd",
+      "libraryDirectory": "es",
+      "style": "css"
+    }]
   ]
 }

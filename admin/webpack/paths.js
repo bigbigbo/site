@@ -11,5 +11,7 @@ module.exports = {
   appPublic: path.resolve(__dirname, '../public'),
   appPackageJson: path.resolve(__dirname, '../package.json'),
   appPostcssConfigJson: path.resolve(__dirname, '../postcss.config.js'),
-  resolveApp: p => path.resolve(appDirectory, p)
+  resolveApp: p => path.resolve(appDirectory, p),
+  shareui: path.resolve(__dirname, '../node_modules/@share/shareui'),
+  bobo: path.resolve(__dirname, '../node_modules/@bobo')
 };

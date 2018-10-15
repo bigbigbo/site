@@ -12,7 +12,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const paths = require('./paths');
 
 // 入口
-const DEFAULT_ENTRY_GLOB = './src/pages/*/index.{js,ts}';
+const DEFAULT_ENTRY_GLOB = './src/pages/*/index.{js,ts,tsx}';
 const DEFAULT_HTML_GLOB = './src/pages/*/index.{html,ejs}';
 const mainjss = glob.sync(DEFAULT_ENTRY_GLOB, paths.appDirectory);
 const htmls = glob.sync(DEFAULT_HTML_GLOB, paths.appDirectory);
@@ -58,7 +58,12 @@ module.exports = {
     new ScriptExtHtmlWebpackPlugin({
       inline: /runtime\..*\.js$/
     }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jquery: 'jquery',
+      jQuery: 'jquery'
+    })
   ],
   resolve: {
     modules: [paths.appNodeModules, 'node_modules'],

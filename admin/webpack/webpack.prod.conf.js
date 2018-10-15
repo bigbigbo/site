@@ -4,9 +4,10 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const SizePlugin = require('size-plugin');
 const baseWebpackConfig = require('./webpack.base.conf');
 const paths = require('./paths');
-const variables = require('../src/global/theme.js');
+const variables = require('../src/config/theme.js');
 
 module.exports = merge(baseWebpackConfig, {
   mode: 'production',
@@ -37,7 +38,29 @@ module.exports = merge(baseWebpackConfig, {
           MiniCssExtractPlugin.loader,
           {
             loader: 'typings-for-css-modules-loader',
-            options: { modules: true, localIdentName: '[local]___[hash:base64:5]', importLoaders: 1 }
+            options: {
+              modules: true,
+              localIdentName: '[local]___[hash:base64:5]',
+              importLoaders: 1,
+              namedExport: true,
+              camelCase: true
+            }
+          },
+          {
+            loader: 'postcss-loader'
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        include: [paths.appNodeModules],
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
           },
           {
             loader: 'postcss-loader'
@@ -51,7 +74,13 @@ module.exports = merge(baseWebpackConfig, {
           MiniCssExtractPlugin.loader,
           {
             loader: 'typings-for-css-modules-loader',
-            options: { modules: true, localIdentName: '[local]___[hash:base64:5]', importLoaders: 1 }
+            options: {
+              modules: true,
+              localIdentName: '[local]___[hash:base64:5]',
+              importLoaders: 1,
+              namedExport: true,
+              camelCase: true
+            }
           },
           {
             loader: 'postcss-loader'
@@ -65,9 +94,27 @@ module.exports = merge(baseWebpackConfig, {
         ]
       },
       {
+        test: /\.less$/,
+        include: [paths.appNodeModules],
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          },
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'less-loader'
+          }
+        ]
+      },
+      {
         test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
-          // 'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
           {
             loader: 'file-loader',
             options: {
@@ -99,7 +146,6 @@ module.exports = merge(baseWebpackConfig, {
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        // use: 'url-loader?limit=10000&mimetype=application/font-woff',
         use: [
           {
             loader: 'url-loader',
@@ -125,7 +171,8 @@ module.exports = merge(baseWebpackConfig, {
       chunkFilename: 'css/app.[contenthash:12].css' // use contenthash *
     }),
     new ForkTsCheckerWebpackPlugin(),
-    new webpack.WatchIgnorePlugin([/(c|le|sc)ss\.d\.ts$/])
+    new webpack.WatchIgnorePlugin([/(c|le|sc)ss\.d\.ts$/]),
+    new SizePlugin()
   ],
   optimization: {
     runtimeChunk: 'single',
@@ -154,13 +201,6 @@ module.exports = merge(baseWebpackConfig, {
           },
           minChunks: 2,
           priority: 5,
-          reuseExistingChunk: true
-        },
-        styles: {
-          name: 'styles',
-          test: /\.(less|scss|css)$/,
-          chunks: 'all',
-          minChunks: 1,
           reuseExistingChunk: true
         }
       }

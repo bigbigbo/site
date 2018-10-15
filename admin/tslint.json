@@ -7,7 +7,9 @@
     ]
   },
   "rules": {
-    "variable-name": [false],
-    "import-name": [ false, { "react": "React" }]
+    "variable-name": false,
+    "import-name": false,
+    "function-name": false,
+    "no-boolean-literal-compare": false
   }
 }
