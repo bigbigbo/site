@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const glob = require('glob');
+// const glob = require('glob');
 const webpack = require('webpack');
 
 // plugins
@@ -12,16 +12,16 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const paths = require('./paths');
 
 // 入口
-const DEFAULT_ENTRY_GLOB = './src/pages/*/index.{js,ts,tsx}';
-const DEFAULT_HTML_GLOB = './src/pages/*/index.{html,ejs}';
-const mainjss = glob.sync(DEFAULT_ENTRY_GLOB, paths.appDirectory);
-const htmls = glob.sync(DEFAULT_HTML_GLOB, paths.appDirectory);
-const entrys = mainjss.reduce((memo, filePath, index) => {
-  const key = filePath.split('/')[3] || `page_${index}`; // eslint-disable-line
+// const DEFAULT_ENTRY_GLOB = './src/pages/*/index.{js,ts,tsx}';
+// const DEFAULT_HTML_GLOB = './src/pages/*/index.{html,ejs}';
+// const mainjss = glob.sync(DEFAULT_ENTRY_GLOB, paths.appDirectory);
+// const htmls = glob.sync(DEFAULT_HTML_GLOB, paths.appDirectory);
+// const entrys = mainjss.reduce((memo, filePath, index) => {
+//   const key = filePath.split('/')[3] || `page_${index}`; // eslint-disable-line
 
-  memo[key] = paths.resolveApp(filePath); // eslint-disable-line
-  return memo;
-}, {});
+//   memo[key] = paths.resolveApp(filePath); // eslint-disable-line
+//   return memo;
+// }, {});
 
 // 注入到html的loading样式
 const loading = {
@@ -29,24 +29,25 @@ const loading = {
   css: `<style type="text/css">${fs.readFileSync(path.join(__dirname, './loading/index.css'))}</style>`
 };
 
-const htmlPlugins = htmls.map((filePath, index) => {
-  const pageName = filePath.split('/')[3] || `page_${index}`;
-  const filename = `${pageName}.html`;
+// const htmlPlugins = htmls.map((filePath, index) => {
+//   const pageName = filePath.split('/')[3] || `page_${index}`;
+//   const filename = `${pageName}.html`;
 
-  return new HtmlWebpackPlugin({
-    filename,
-    template: paths.resolveApp(filePath),
-    inject: true,
-    chunks: [pageName, 'commons', 'vendors', 'polyfills', 'runtime'],
-    loading
-  });
-});
+//   return new HtmlWebpackPlugin({
+//     filename,
+//     template: paths.resolveApp(filePath),
+//     inject: true,
+//     chunks: [pageName, 'commons', 'vendors', 'polyfills', 'runtime'],
+//     loading
+//   });
+// });
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
     polyfills: require.resolve('./polyfills'),
-    ...entrys
+    // ...entrys
+    index: require.resolve('../src/index.ts')
   },
   plugins: [
     new CleanWebpackPlugin(['build'], {
@@ -54,7 +55,13 @@ module.exports = {
     }),
     new webpack.NamedChunksPlugin(),
     new webpack.NamedModulesPlugin(),
-    ...htmlPlugins,
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: paths.htmlTpl,
+      inject: true,
+      chunks: ['index', 'commons', 'vendors', 'polyfills', 'runtime'],
+      loading
+    }),
     new ScriptExtHtmlWebpackPlugin({
       inline: /runtime\..*\.js$/
     }),

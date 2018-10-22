@@ -13,5 +13,6 @@ module.exports = {
   appPostcssConfigJson: path.resolve(__dirname, '../postcss.config.js'),
   resolveApp: p => path.resolve(appDirectory, p),
   shareui: path.resolve(__dirname, '../node_modules/@share/shareui'),
-  bobo: path.resolve(__dirname, '../node_modules/@bobo')
+  bobo: path.resolve(__dirname, '../node_modules/@bobo'),
+  htmlTpl: path.resolve(__dirname, '../src/index.html')
 };

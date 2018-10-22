@@ -1,6 +1,7 @@
 import dva from 'dva';
+import createLoading from 'dva-loading';
 
-const models = (<any>require).context('../../models', true, /\.tsx$/);
+const models = (<any>require).context('./models', true, /\.tsx$/);
 
 function importAll(r: any, cb: any): void {
   r.keys().forEach((key: any) => cb(r(key).default));
@@ -10,7 +11,7 @@ function importAll(r: any, cb: any): void {
 const app = dva();
 
 // 2. Plugins
-// app.use({});
+app.use(createLoading());
 
 // 3. Model
 importAll(models, app.model);

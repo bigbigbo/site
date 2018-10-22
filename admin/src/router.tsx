@@ -2,7 +2,7 @@ import React, { createElement } from 'react';
 import { Switch, Route, routerRedux } from 'dva/router';
 import { dynamic } from '@/utils/router';
 import App from '@/layouts/AppWrapper';
-import ROUTES from './routes/config';
+import ROUTES from './pages/config';
 
 const ConnectedRouter = routerRedux.ConnectedRouter;
 
@@ -10,7 +10,7 @@ function getRouterConfig({ history, app }: { history: any; app: any }) {
   const routes = ROUTES.map(route => {
     const { models = [], component, ...restProps } = route;
     const modelsCache = models.reduce(
-      (memo, model) => ({ ...memo, [model]: require(`./models/${model}`).default }),
+      (memo, model) => ({ ...memo, [model]: require(`./pages/models/${model}`).default }),
       {}
     );
 
