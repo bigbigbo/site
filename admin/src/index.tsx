@@ -1,7 +1,7 @@
 import dva from 'dva';
 import createLoading from 'dva-loading';
 
-const models = (<any>require).context('./models', true, /\.tsx$/);
+const models = (require as any).context('./models', true, /\.tsx$/);
 
 function importAll(r: any, cb: any): void {
   r.keys().forEach((key: any) => cb(r(key).default));
@@ -22,5 +22,5 @@ app.router(require('./router').default);
 // 5. Start
 app.start('#root');
 
-(<any>window)._store = (<any>app)._store;
-(<any>window).dispatch = (<any>app)._store.dispatch;
+window._store = (app as any)._store;
+window.dispatch = (app as any)._store.dispatch;

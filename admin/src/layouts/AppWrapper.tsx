@@ -5,20 +5,21 @@ import { compose } from 'recompose';
 import NProgress from 'nprogress';
 import didCatch from '@/components/did-catch';
 
+import { StoreState } from '@/types/model';
+
 const enhance = compose(
+  didCatch,
   withRouter,
-  connect(({ loading }) => ({ loading })),
-  didCatch
+  connect(({ loading }: StoreState) => ({ loading }))
 );
 
-const AppWrapper = ({ loading, children }) => {
-  let currHref = '';
-  const href = window.location.href; // 浏览器地址栏中地址
-  if (currHref !== href) {
+const AppWrapper: React.SFC<StoreState> = ({ loading, children }) => {
+  const { href } = window.location; // 浏览器地址栏中地址
+  if (window._currHref !== href) {
     NProgress.start();
     if (!loading.global) {
       NProgress.done();
-      currHref = href;
+      window._currHref = href;
     }
   }
 
