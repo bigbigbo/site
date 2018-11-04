@@ -47,7 +47,7 @@ module.exports = {
   entry: {
     polyfills: require.resolve('./polyfills'),
     // ...entrys
-    index: require.resolve('../src/index.ts')
+    index: require.resolve('../src/index.tsx')
   },
   plugins: [
     new CleanWebpackPlugin(['build'], {

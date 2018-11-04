@@ -14,7 +14,7 @@ const enhance = compose(
 );
 
 const AppWrapper: React.SFC<StoreState> = ({ loading, children }) => {
-  const { href } = window.location; // 浏览器地址栏中地址
+  const { href } = window.location;
   if (window._currHref !== href) {
     NProgress.start();
     if (!loading.global) {

@@ -1,9 +1,12 @@
 {
-  "name": "admin",
-  "version": "1.0.0",
+  "name": "site-admin",
+  "version": "0.1.0",
   "license": "MIT",
   "private": true,
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
   "scripts": {
     "precommit": "npm run lint-staged",
     "lint:style": "stylelint \"src/**/*.{css,less,scss}\"",
