@@ -12,6 +12,7 @@ export interface RouteConfig extends RouteProps {
   component: any;
   models?: string[];
   exact?: boolean;
+  menu?: any;
 }
 
 /**

@@ -5,8 +5,13 @@ export default compose(
   toClass,
   Form.create(),
   withHandlers({
-    handleSubmit: () => fieldsValue => {
-      console.log('==>', fieldsValue);
+    handleSubmit: ({ form }) => e => {
+      e.preventDefault();
+      form.validateFields((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values);
+        }
+      });
     }
   })
 );

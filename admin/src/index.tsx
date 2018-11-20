@@ -1,5 +1,6 @@
 import dva from 'dva';
 import createLoading from 'dva-loading';
+import '@/config/normalize.less';
 
 const models = (require as any).context('./models', true, /\.tsx$/);
 

@@ -23,7 +23,7 @@ const AppWrapper: React.SFC<StoreState> = ({ loading, children }) => {
     }
   }
 
-  return <div>{children}</div>;
+  return <div className="app__wrapper">{children}</div>;
 };
 
 export default enhance(AppWrapper);

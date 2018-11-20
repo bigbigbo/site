@@ -5,6 +5,12 @@ import { RouteConfig } from '@/types/router';
  */
 const ROUTES: RouteConfig[] = [
   {
+    path: '/',
+    name: '首页/仪表盘',
+    models: [],
+    component: () => import('./dashboard')
+  },
+  {
     path: '/login',
     name: '登录页',
     models: [],
