@@ -8,6 +8,9 @@ const ROUTES: RouteConfig[] = [
     path: '/',
     name: '首页/仪表盘',
     models: [],
+    menu: {
+      catalogue: 'home'
+    },
     component: () => import('./dashboard')
   },
   {
